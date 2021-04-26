@@ -2,30 +2,54 @@
 
 namespace App\Controllers;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use App\Models\Database;
+use App\Models\Settings;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DefaultController
 {
-    public function version(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function home(Response $response): Response
     {
-        $response->getBody()->write('1.0.0');
+        return $response
+            ->withHeader('Location', '/version')
+            ->withStatus(302);
+    }
+
+    public function version(Response $response): Response
+    {
+        $data = [
+            'app_name' => Settings::get('name'),
+            'app_url' => Settings::get('url'),
+            'app_env' => Settings::get('env'),
+            'app_ver' => Settings::get('ver'),
+        ];
+
+        $response->withStatus(200);
+        $response->getBody()->write(json_encode($data));
 
         return $response;
     }
 
-    public function health(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function health(Response $response): Response
     {
-        $response->getStatusCode(200);
+        $response->withStatus(200);
 
         return $response;
     }
 
-    public function metrics(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function metrics(Response $response): Response
     {
         $time = microtime(true) - APP_START;
 
-        $response->getBody()->write(json_encode(["time" => $time]));
+        $data = [
+            'request_time' => $time,
+        ];
+
+        $data['some_data_from_db'] = 123;
+
+        $response->getBody()->write(json_encode($data));
+        $response->withStatus(200);
 
         return $response;
     }
