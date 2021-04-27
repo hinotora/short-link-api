@@ -18,6 +18,7 @@ class Database
         if (file_exists($settingsFile)) {
             $settings = require_once $settingsFile;
 
+            $db_driver = $settings['DB_DRIVER'];
             $db_host = $settings['DB_HOST'];
             $db_port = $settings['DB_PORT'];
             $db_name = $settings['DB_NAME'];
@@ -27,7 +28,7 @@ class Database
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             ];
 
-            $dsn = "mysql:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4";
+            $dsn = "$db_driver:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4";
 
             $this->connection = new \PDO($dsn, $db_user, $db_pass, $flags);
 

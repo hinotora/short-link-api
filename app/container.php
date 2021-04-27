@@ -2,13 +2,16 @@
 
 use App\Services\Database;
 use App\Services\Settings;
+use App\Services\SettingsInterface;
+
+use DI\Container;
 
 return [
-    Settings::class => function (\DI\Container $c) {
-        return Settings::get();
+    SettingsInterface::class => function (Container $c) {
+        return Settings::instance();
     },
 
-    Database::class => function(\DI\Container $e) {
+    Database::class => function(Container $c) {
         return Database::getConnection();
     },
 ];

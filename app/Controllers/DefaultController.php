@@ -2,20 +2,27 @@
 
 namespace App\Controllers;
 
-use App\Services\Settings;
+use App\Services\SettingsInterface;
+use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class DefaultController
+
+class DefaultController extends BaseController
 {
-    public function home(Response $response): Response
+    public function redirect_main(Response $response): Response
     {
+        $app = $this->container->get(App::class);
+        $route = $app->getRouteCollector()->getRouteParser()->urlFor('default-endpoint');
+
         return $response
-            ->withHeader('Location', '/version')
+            ->withHeader('Location', $route)
             ->withStatus(302);
     }
 
-    public function version(Response $response, Settings $settings): Response
+    public function version(Response $response): Response
     {
+        $settings = $this->container->get(SettingsInterface::class);
+
         $settings = $settings->all();
 
         $data = [

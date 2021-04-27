@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class Settings
+class Settings implements SettingsInterface
 {
     private static ?Settings $instance = null;
     private array $settings;
@@ -28,7 +28,7 @@ class Settings
      *
      * @return Settings|null
      */
-    public static function get(): ?Settings
+    public static function instance(): ?Settings
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
