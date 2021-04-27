@@ -18,6 +18,8 @@ class Settings
 
         if (file_exists($settingsFile)) {
             $this->settings = require_once $settingsFile;
+        } else {
+            throw new \Exception("Application settings file not found in <$settingsFile>");
         }
     }
 
