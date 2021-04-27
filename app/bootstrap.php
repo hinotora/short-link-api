@@ -1,17 +1,16 @@
 <?php
 
 use DI\Bridge\Slim\Bridge as AppFactory;
-use DI\Container;
+use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 
 // Load environment vars
 $env = Dotenv::createMutable(BASE_PATH);
 $env->load();
 
-$container = new Container;
-
-$settings = require_once BASE_PATH . '/app/container.php';
-$settings($container);
+$builder = new ContainerBuilder();
+$builder->addDefinitions(BASE_PATH . '/app/container.php');
+$container = $builder->build();
 
 $app = AppFactory::create($container);
 

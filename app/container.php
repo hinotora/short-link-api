@@ -1,15 +1,10 @@
 <?php
 
-use App\Models\Settings;
-use App\Models\Database;
+use App\Services\Settings;
 use Psr\Container\ContainerInterface;
 
-return function (ContainerInterface $container) {
-    $container->set('app', function () {
+return [
+    Settings::class => function (\DI\Container $c) {
         return Settings::get();
-    });
-
-    $container->set('database', function () {
-        return Database::get();
-    });
-};
+    },
+];

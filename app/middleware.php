@@ -1,11 +1,14 @@
 <?php
 
 use Slim\App;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response;
 
 return function (App $app) {
-    $settings = $app->getContainer()->get('app');
+    $env = $app->getContainer()->get(\App\Services\Settings::class)->key('env');
 
-    $errorMode = $settings['env'] == 'local';
+    $errorMode = $env == 'local' ? true: false;
 
     $app->addErrorMiddleware($errorMode,true,true);
 };

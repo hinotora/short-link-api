@@ -2,10 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Database;
-use App\Models\Settings;
+use App\Services\Settings;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DefaultController
 {
@@ -16,13 +14,15 @@ class DefaultController
             ->withStatus(302);
     }
 
-    public function version(Response $response): Response
+    public function version(Response $response, Settings $settings): Response
     {
+        $settings = $settings->all();
+
         $data = [
-            'app_name' => Settings::get('name'),
-            'app_url' => Settings::get('url'),
-            'app_env' => Settings::get('env'),
-            'app_ver' => Settings::get('ver'),
+            'app_name' => $settings['name'],
+            'app_url' => $settings['url'],
+            'app_env' => $settings['env'],
+            'app_ver' => $settings['ver'],
         ];
 
         $response->withStatus(200);
@@ -45,8 +45,6 @@ class DefaultController
         $data = [
             'request_time' => $time,
         ];
-
-        $data['some_data_from_db'] = 123;
 
         $response->getBody()->write(json_encode($data));
         $response->withStatus(200);
