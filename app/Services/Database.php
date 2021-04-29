@@ -9,8 +9,6 @@ class Database
     private static $instance;
     private \PDO $connection;
 
-    public $time;
-
     private function __construct()
     {
         $settingsFile = BASE_PATH . '/config/database.php';
@@ -30,9 +28,13 @@ class Database
 
             $dsn = "$db_driver:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4";
 
-            $this->connection = new \PDO($dsn, $db_user, $db_pass, $flags);
+            try {
+                $this->connection = new \PDO($dsn, $db_user, $db_pass, $flags);
+            }
+            catch (\PDOException $e) {
+                die('Unable to connect with database');
+            }
 
-            $this->time = microtime(true);
         } else {
             throw new \Exception("Database settings file not found in <$settingsFile>");
         }

@@ -1,6 +1,12 @@
 <?php
 
-$db_settings = require_once 'config/phinx.php';
+require_once 'vendor/autoload.php';
+
+// Load environment vars
+$env = Dotenv\Dotenv::createMutable('.');
+$env->load();
+
+$db_settings = require_once 'config/database.php';
 
 return
 [
@@ -30,13 +36,8 @@ return
             'charset' => 'utf8mb4',
         ],
         'testing' => [
-            'adapter' => 'mysql',
-            'host' => 'localhost',
-            'name' => 'testing_db',
-            'user' => 'root',
-            'pass' => '',
-            'port' => '3306',
-            'charset' => 'utf8mb4',
+            'adapter' => 'sqlite',
+            'name' => './database/testing'
         ]
     ],
     'version_order' => 'creation'

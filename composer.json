@@ -23,7 +23,10 @@
     },
     "scripts": {
         "start": "php -S localhost:8000 -t public/",
-        "migrate": "vendor/bin/phinx migrate",
-        "test": "phpunit"
+        "db-migrate": "vendor/bin/phinx migrate",
+        "db-seed": "vendor/bin/phinx seed:run",
+        "db-refresh": "vendor/bin/phinx rollback -t 0; vendor/bin/phinx migrate; vendor/bin/phinx seed:run",
+
+        "test": "vendor/bin/phpunit"
     }
 }
