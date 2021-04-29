@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class Settings implements SettingsInterface
+class Settings
 {
     private static ?Settings $instance = null;
     private array $settings;

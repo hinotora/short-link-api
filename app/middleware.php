@@ -1,10 +1,10 @@
 <?php
 
-use App\Services\SettingsInterface;
+use App\Services\Settings;
 use Slim\App;
 
 return function (App $app) {
-    $env = $app->getContainer()->get(SettingsInterface::class)->key('env');
+    $env = $app->getContainer()->get(Settings::class)->key('env');
 
     $errorMode = ($env == 'development');
 

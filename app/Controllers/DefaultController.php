@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\SettingsInterface;
+use App\Services\Settings;
 use Slim\App;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -21,7 +21,7 @@ class DefaultController extends BaseController
 
     public function version(Response $response): Response
     {
-        $settings = $this->container->get(SettingsInterface::class);
+        $settings = $this->container->get(Settings::class);
 
         $settings = $settings->all();
 
