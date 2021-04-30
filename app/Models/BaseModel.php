@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Services\Database;
-use DI\Container;
+use Psr\Container\ContainerInterface;
 
 abstract class BaseModel
 {
-    protected Container $container;
+    protected ContainerInterface $container;
+    protected \PDO $pdo;
 
-    public function __construct(Container $container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->pdo = $this->container->get(Database::class);
     }
 }

@@ -2,13 +2,21 @@
 
 namespace App\Controllers;
 
-use App\Services\Settings;
 use Slim\App;
+use App\Services\Settings;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 
 
-class DefaultController extends BaseController
+class DefaultController
 {
+    protected ContainerInterface $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     public function redirect_main(Response $response): Response
     {
         $app = $this->container->get(App::class);
