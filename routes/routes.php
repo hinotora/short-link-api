@@ -7,16 +7,13 @@ use Slim\Routing\RouteCollectorProxy;
 
 return function (App $app) {
 
-    $app->get('/', [DefaultController::class, 'redirect_main']);
-
-    $app->get('/{link}', [MainController::class, 'redirect']);
-
+    $app->get('/', [DefaultController::class, 'default']);
     $app->group('/v1', function (RouteCollectorProxy $group) {
-        $group->get('/', [DefaultController::class, 'redirect_main']);
+        $group->get('/', [DefaultController::class, 'default']);
         $group->get('/version', [DefaultController::class, 'version'])->setName('default-endpoint');
         $group->get('/health', [DefaultController::class, 'health']);
         $group->get('/metrics', [DefaultController::class, 'metrics']);
-
-
     });
+
+    $app->get('/{link:[a-zA-Z]+$}', [MainController::class, 'redirect']);
 };

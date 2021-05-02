@@ -17,7 +17,7 @@ class DefaultController
         $this->container = $container;
     }
 
-    public function redirect_main(Response $response): Response
+    public function default(Response $response): Response
     {
         $app = $this->container->get(App::class);
         $route = $app->getRouteCollector()->getRouteParser()->urlFor('default-endpoint');

@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Link;
+use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Exception\HttpNotFoundException;
 
 class MainController
 {
@@ -14,10 +16,12 @@ class MainController
         $this->link = $link;
     }
 
-    public function redirect(Response $response, $link): Response
+    public function redirect(Response $response, Request $request, string $link): Response
     {
-        $response->getBody()->write($this->link->get());
+        if (!$this->link->find($link)) {
+            throw new HttpNotFoundException($request, "LINK NOT FOUND > $link");
+        }
 
-        return $response;
+        return $response->withHeader("Location", $this->link->incrementRedirect()->getUrl())->withStatus(302);
     }
 }
