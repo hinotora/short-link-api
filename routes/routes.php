@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\LinkController;
 use App\Controllers\MainController;
 use App\Middleware\ParseJsonBodyMiddleware;
 use Slim\App;
@@ -20,19 +21,16 @@ return function (App $app) {
     $app->group('/v1', function (RouteCollectorProxy $group) {
 
         // Default routes
-        $group->get('/', [DefaultController::class, 'default']);
+        $group->get('', [DefaultController::class, 'default']);
         $group->get('/version', [DefaultController::class, 'version'])->setName('default-endpoint');
         $group->get('/health', [DefaultController::class, 'health']);
         $group->get('/metrics', [DefaultController::class, 'metrics']);
 
-        // Link operations
+        // Link CRUD operations
         $group->group('/link', function (RouteCollectorProxy $group) {
-
-            // TODO: Link CRUD operations
-//            $group->put('/');
-//            $group->patch('/');
-//            $group->delete('/');
-
+            $group->put('', [LinkController::class, 'create']);
+            $group->get('/{link:[a-zA-Z]+$}', [LinkController::class, 'show']);
+            $group->delete('/{link:[a-zA-Z]+$}', [LinkController::class, 'delete']);
         })->addMiddleware(new ParseJsonBodyMiddleware);
     });
 
