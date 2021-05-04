@@ -10,12 +10,10 @@ final class CreateLinksTable extends AbstractMigration
         $table = $this->table('links', ['id' => 'link_id']);
 
         $table
-            ->addColumn('user_id', 'integer')
-                ->addForeignKey('user_id', 'users', 'user_id')
             ->addColumn('short', 'string', ['limit' => 32])
             ->addColumn('full', 'string', ['limit' => 256])
             ->addColumn('created_at', 'datetime')
-            ->addColumn('redirects_count', 'integer')
+            ->addColumn('redirects_count', 'integer', ['default' => 0])
             ->create();
     }
 }
