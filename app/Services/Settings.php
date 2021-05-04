@@ -4,15 +4,12 @@ namespace App\Services;
 
 class Settings
 {
-    private static ?Settings $instance = null;
     private array $settings;
-
-    private function __clone() {}
 
     /**
      * Settings constructor.
      */
-    private function __construct()
+    public function __construct()
     {
         $settingsFile = BASE_PATH . '/config/settings.php';
 
@@ -21,20 +18,6 @@ class Settings
         } else {
             throw new \Exception("Application settings file not found in <$settingsFile>");
         }
-    }
-
-    /**
-     * Returns an instance of Settings object. (Singleton)
-     *
-     * @return Settings|null
-     */
-    public static function instance(): ?Settings
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     /**

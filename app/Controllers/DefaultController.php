@@ -17,9 +17,8 @@ class DefaultController
         $this->container = $container;
     }
 
-    public function default(Response $response): Response
+    public function default(Response $response, App $app): Response
     {
-        $app = $this->container->get(App::class);
         $route = $app->getRouteCollector()->getRouteParser()->urlFor('default-endpoint');
 
         return $response
@@ -27,10 +26,8 @@ class DefaultController
             ->withStatus(302);
     }
 
-    public function version(Response $response): Response
+    public function version(Response $response, Settings $settings): Response
     {
-        $settings = $this->container->get(Settings::class);
-
         $settings = $settings->all();
 
         $data = [
