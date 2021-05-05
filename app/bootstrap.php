@@ -1,5 +1,6 @@
 <?php
 
+use App\Middleware\SlashTrainingMiddleware;
 use DI\Bridge\Slim\Bridge as AppFactory;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
@@ -21,5 +22,8 @@ $middleware($app);
 // Initialize API routes
 $routes = require_once BASE_PATH . '/routes/routes.php';
 $routes($app);
+
+// Initialize other middleware
+$app->add(new SlashTrainingMiddleware());
 
 $app->run();

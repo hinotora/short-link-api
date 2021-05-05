@@ -7,8 +7,6 @@ use Slim\App;
 use App\Controllers\DefaultController;
 use Slim\Routing\RouteCollectorProxy;
 
-// TODO: SLASH TRAILING
-
 return function (App $app) {
 
     // Main route, redirects to default-endpoint
@@ -33,6 +31,5 @@ return function (App $app) {
             $group->delete('/{link:[a-zA-Z]+$}', [LinkController::class, 'delete']);
         })->addMiddleware(new ParseJsonBodyMiddleware);
     });
-
 
 };
