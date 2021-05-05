@@ -32,7 +32,7 @@ class Database
                 $this->connection = new \PDO($dsn, $db_user, $db_pass, $flags);
             }
             catch (\PDOException $e) {
-                die('Unable to connect with database');
+                throw new \PDOException('Unable to connect with database');
             }
 
         } else {

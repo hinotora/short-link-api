@@ -64,3 +64,17 @@ if (!function_exists('appUrl')) {
         return $_ENV['APP_URL'].$url;
     }
 }
+
+if (!function_exists('environ')) {
+    /**
+     * Get value from environment
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    function environ(string $key, mixed $default = ''): string
+    {
+        return $_ENV[$key] ?? $default;
+    }
+}

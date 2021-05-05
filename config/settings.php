@@ -1,8 +1,8 @@
 <?php
 
 return  [
-    'name' => $_ENV['APP_NAME'],
-    'ver' => $_ENV['APP_VER'],
-    'url' => $_ENV['APP_URL'],
-    'env' => $_ENV['APP_ENV'],
+    'name' => environ('APP_NAME', 'SLIM REST API'),
+    'ver' => environ('APP_VER', '0.0.0'),
+    'url' => environ('APP_URL', 'localhost'),
+    'env' => environ('APP_ENV', 'testing'),
 ];
