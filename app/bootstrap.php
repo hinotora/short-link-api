@@ -1,29 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Middleware\SlashTrainingMiddleware;
 use DI\Bridge\Slim\Bridge as AppFactory;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 
+
+// Require dependencies
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
 // Load environment vars
-$env = Dotenv::createMutable(BASE_PATH);
+if ($_ENV['APP_ENV'] == 'testing')
+    $env = Dotenv::createMutable(dirname(__DIR__),'.env.testing');
+else
+    $env = Dotenv::createMutable(dirname(__DIR__));
+
 $env->load();
 
 $builder = new ContainerBuilder();
-$builder->addDefinitions(BASE_PATH . '/app/container.php');
+$builder->addDefinitions(__DIR__ . '/../app/container.php');
 $container = $builder->build();
 
 $app = AppFactory::create($container);
 
 // Initialize middleware
-$middleware = require_once BASE_PATH . '/app/middleware.php';
+$middleware = require __DIR__ . '/../app/middleware.php';
 $middleware($app);
 
 // Initialize API routes
-$routes = require_once BASE_PATH . '/routes/routes.php';
+$routes = require __DIR__ . '/../routes/routes.php';
 $routes($app);
 
 // Initialize other middleware
 $app->add(new SlashTrainingMiddleware());
 
-$app->run();
+return $app;

@@ -11,7 +11,7 @@ class Database
 
     private function __construct()
     {
-        $settingsFile = BASE_PATH . '/config/database.php';
+        $settingsFile = dirname(__DIR__) . '/../config/database.php';
 
         if (file_exists($settingsFile)) {
             $settings = require_once $settingsFile;

@@ -11,7 +11,7 @@ class Settings
      */
     public function __construct()
     {
-        $settingsFile = BASE_PATH . '/config/settings.php';
+        $settingsFile = dirname(__DIR__) . '/../config/settings.php';
 
         if (file_exists($settingsFile)) {
             $this->settings = require_once $settingsFile;

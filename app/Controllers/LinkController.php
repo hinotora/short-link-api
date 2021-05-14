@@ -34,7 +34,13 @@ class LinkController
 
     public function create(ServerRequestInterface $request, ResponseInterface $response, App $app): ResponseInterface
     {
-        $newLink = $request->getParsedBody()['full'];
+        $body =  $request->getParsedBody();
+
+        if (!isset($body['full'])) {
+            throw new HttpBadRequestException($request, "EMPTY BODY");
+        }
+
+        $newLink = $body['full'];
 
         if (!parseUrl($newLink)) {
             throw new HttpBadRequestException($request, "URL IS NOT VALID");

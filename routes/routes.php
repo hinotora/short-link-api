@@ -21,8 +21,6 @@ return function (App $app) {
         // Default routes
         $group->get('', [DefaultController::class, 'default']);
         $group->get('/version', [DefaultController::class, 'version'])->setName('default-endpoint');
-        $group->get('/health', [DefaultController::class, 'health']);
-        $group->get('/metrics', [DefaultController::class, 'metrics']);
 
         // Link CRUD operations
         $group->group('/link', function (RouteCollectorProxy $group) {

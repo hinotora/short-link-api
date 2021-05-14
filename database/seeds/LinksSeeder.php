@@ -9,14 +9,8 @@ class LinksSeeder extends AbstractSeed
     {
         $data = [
             [
-                'short' => 'DfgfFFjfk',
+                'short' => 'somelinkfromdbseeder',
                 'full' => 'https://google.com/',
-                'created_at' => now(),
-                'redirects_count' => '0'
-            ],
-            [
-                'short' => 'FdgFFdrgd',
-                'full' => 'https://instagram.com/',
                 'created_at' => now(),
                 'redirects_count' => '0'
             ],

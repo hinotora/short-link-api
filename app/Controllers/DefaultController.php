@@ -22,7 +22,7 @@ class DefaultController
         $route = $app->getRouteCollector()->getRouteParser()->urlFor('default-endpoint');
 
         return $response
-            ->withHeader('Location', $route)
+            ->withHeader('Location', appUrl($route))
             ->withStatus(302);
     }
 

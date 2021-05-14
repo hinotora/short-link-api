@@ -59,9 +59,11 @@ if (!function_exists('appUrl')) {
      * @param string $url
      * @return string
      */
-    function short(string $url): string
+    function appUrl(string $url): string
     {
-        return $_ENV['APP_URL'].$url;
+        $trimmedUrl = rtrim(trim($_ENV['APP_URL']), '/');
+
+        return $trimmedUrl.$url;
     }
 }
 
