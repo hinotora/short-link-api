@@ -26,7 +26,13 @@ class Database
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             ];
 
-            $dsn = "$db_driver:host=$db_host;port=$db_port;dbname=$db_name;charset=utf8mb4";
+            if ($db_driver != 'pgsql') {
+                $charset = "charset=utf8mb4";
+            } else {
+                $charset = "";
+            }
+
+            $dsn = "$db_driver:host=$db_host;port=$db_port;dbname=$db_name;".$charset;
 
             try {
                 $this->connection = new \PDO($dsn, $db_user, $db_pass, $flags);

@@ -135,7 +135,7 @@ Response example:
 ```json
 {
   "short": "http://localhost:8000/AdfFDfHkjFh",
-  "full": "https://google.com/",
+  "full_link": "https://google.com/",
   "created_at": "2021-05-04 11:19:02",
   "redirects_count": "17"
 }
@@ -167,7 +167,7 @@ Returns HTTP 201 if successfully created. Response example:
 ```json
 {
   "short": "http://localhost:8000/FdfdDJKJhdf",
-  "full": "https://google.com/",
+  "full_link": "https://google.com/",
   "created_at": "2021-05-04 11:19:02",
   "redirects_count": "0"
 }

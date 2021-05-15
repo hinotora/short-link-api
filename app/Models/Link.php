@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Settings;
 use Slim\App;
 
 class Link extends BaseModel
@@ -28,10 +29,10 @@ class Link extends BaseModel
     public function getUrl(): string
     {
         $stmt = $this->pdo->query(
-            "SELECT full FROM {$this->getTableName()} WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}"
+            "SELECT full_link FROM {$this->getTableName()} WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}"
         );
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC)['full'];
+        return $stmt->fetch(\PDO::FETCH_ASSOC)['full_link'];
     }
 
     public function incrementRedirect(): static
@@ -44,10 +45,8 @@ class Link extends BaseModel
     }
 
     public function info() {
-        $app = $this->container->get(App::class);
-
         $stmt = $this->pdo->query(
-            "SELECT short, full, created_at, redirects_count  FROM {$this->getTableName()} 
+            "SELECT short, full_link, created_at, redirects_count  FROM {$this->getTableName()} 
                         WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}"
         );
 
@@ -60,11 +59,13 @@ class Link extends BaseModel
 
     public function store(string $newLink): bool
     {
+        $db_driver = environ('DB_DRIVER');
+
         $fullUrl = $newLink;
         $shortUrl = randomStr();
         $createdAt = now();
 
-        $sql = " INSERT INTO {$this->getTableName()} (short, full, created_at) VALUES(:short, :full, :created_at)";
+        $sql = " INSERT INTO {$this->getTableName()} (short, full_link, created_at) VALUES(:short, :full, :created_at)";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':short', $shortUrl);
@@ -72,7 +73,12 @@ class Link extends BaseModel
         $stmt->bindParam('created_at', $createdAt);
 
         if ($stmt->execute()) {
-            $stmt = $this->pdo->query('SELECT LAST_INSERT_ID() AS last');
+            if ($db_driver != 'pgsql') {
+                $stmt = $this->pdo->query('SELECT LAST_INSERT_ID() AS last');
+            } else {
+                $stmt = $this->pdo->query("SELECT currval('links_link_id_seq') as last");
+            }
+
 
             $idModel = $stmt->fetch()['last'];
 

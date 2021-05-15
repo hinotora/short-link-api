@@ -10,7 +10,7 @@ class LinksSeeder extends AbstractSeed
         $data = [
             [
                 'short' => 'somelinkfromdbseeder',
-                'full' => 'https://google.com/',
+                'full_link' => 'https://google.com/',
                 'created_at' => now(),
                 'redirects_count' => '0'
             ],

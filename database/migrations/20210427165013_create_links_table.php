@@ -11,7 +11,7 @@ final class CreateLinksTable extends AbstractMigration
 
         $table
             ->addColumn('short', 'string', ['limit' => 32])
-            ->addColumn('full', 'string', ['limit' => 256])
+            ->addColumn('full_link', 'string', ['limit' => 256])
             ->addColumn('created_at', 'datetime')
             ->addColumn('redirects_count', 'integer', ['default' => 0])
             ->create();

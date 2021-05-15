@@ -17,15 +17,6 @@ return
     'environments' => [
         'default_migration_table' => 'phinxlog',
         'default_environment' => 'development',
-        'production' => [
-            'adapter' => $db_settings['DB_DRIVER'],
-            'host' => $db_settings['DB_HOST'],
-            'name' => $db_settings['DB_NAME'],
-            'user' => $db_settings['DB_USER'],
-            'pass' => $db_settings['DB_PASS'],
-            'port' => $db_settings['DB_PORT'],
-            'charset' => 'utf8mb4',
-        ],
         'development' => [
             'adapter' => $db_settings['DB_DRIVER'],
             'host' => $db_settings['DB_HOST'],
@@ -35,10 +26,6 @@ return
             'port' => $db_settings['DB_PORT'],
             'charset' => 'utf8mb4',
         ],
-        'testing' => [
-            'adapter' => 'sqlite',
-            'name' => './database/testing'
-        ]
     ],
     'version_order' => 'creation'
 ];

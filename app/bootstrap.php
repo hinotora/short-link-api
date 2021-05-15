@@ -12,12 +12,14 @@ use Dotenv\Dotenv;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 // Load environment vars
-if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'testing')
+if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'testing') {
     $env = Dotenv::createMutable(dirname(__DIR__),'.env.testing');
-else
+    $env->load();
+}
+else if (!isset($_ENV['HEROKU'])) {
     $env = Dotenv::createMutable(dirname(__DIR__));
-
-$env->load();
+    $env->load();
+}
 
 // Creating container and add definitions
 $builder = new ContainerBuilder();
