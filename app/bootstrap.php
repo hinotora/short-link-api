@@ -12,7 +12,7 @@ use Dotenv\Dotenv;
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 // Load environment vars
-if ($_ENV['APP_ENV'] == 'testing')
+if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'testing')
     $env = Dotenv::createMutable(dirname(__DIR__),'.env.testing');
 else
     $env = Dotenv::createMutable(dirname(__DIR__));

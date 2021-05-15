@@ -29,9 +29,9 @@
         "db-refresh": "vendor/bin/phinx rollback -t 0; vendor/bin/phinx migrate; vendor/bin/phinx seed:run",
         "test": "vendor/bin/phpunit",
 
-        "post-root-package-install": [
+        "post-install-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php -r \"file_exists('.env') || copy('.env.testing', '.env');\""
+            "@php -r \"file_exists('.env.testing') || copy('.env.example', '.env.testing');\""
         ]
     }
 }
