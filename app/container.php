@@ -1,7 +1,6 @@
 <?php
 
 use App\Services\Database;
-use App\Services\Settings;
 
 use DI\Container;
 

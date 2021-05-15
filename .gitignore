@@ -7,5 +7,5 @@ vendor/
 
 # Envs
 .env
-.env.example
+.env.testing
 

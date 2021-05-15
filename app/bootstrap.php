@@ -19,10 +19,12 @@ else
 
 $env->load();
 
+// Creating container and add definitions
 $builder = new ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/../app/container.php');
 $container = $builder->build();
 
+// Creating application via PHP-DI Slim Bridge
 $app = AppFactory::create($container);
 
 // Initialize middleware

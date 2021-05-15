@@ -19,7 +19,7 @@ class MainController
     public function redirect(Response $response, Request $request, string $link): Response
     {
         if (!$this->link->find($link)) {
-            throw new HttpNotFoundException($request, "LINK NOT FOUND > $link");
+            throw new HttpNotFoundException($request, "Given link not found in database ($link)");
         }
 
         return $response->withHeader("Location", $this->link->incrementRedirect()->getUrl())->withStatus(302);

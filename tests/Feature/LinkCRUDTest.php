@@ -19,5 +19,6 @@ class LinkCRUDTest extends TestCase
         $this->assertArrayHasKey('full', $jsonDecoded);
         $this->assertArrayHasKey('created_at', $jsonDecoded);
         $this->assertArrayHasKey('redirects_count', $jsonDecoded);
+        $this->assertSame('application/json', $response->getHeaderLine('Content-Type'));
     }
 }

@@ -43,5 +43,6 @@ class DefaultEndpointsTest extends TestCase
         $this->assertArrayHasKey('app_url', $jsonDecoded);
         $this->assertArrayHasKey('app_env', $jsonDecoded);
         $this->assertArrayHasKey('app_ver', $jsonDecoded);
+        $this->assertSame('application/json', $response->getHeaderLine('Content-Type'));
     }
 }

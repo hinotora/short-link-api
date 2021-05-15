@@ -7,7 +7,6 @@ use App\Services\Settings;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 
-
 class DefaultController
 {
     protected ContainerInterface $container;
@@ -30,7 +29,7 @@ class DefaultController
     {
         $settings = $settings->all();
 
-        $data = [
+        $payload = [
             'app_name' => $settings['name'],
             'app_url' => $settings['url'],
             'app_env' => $settings['env'],
@@ -43,8 +42,8 @@ class DefaultController
         ];
 
         $response->withStatus(200);
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($payload));
 
-        return $response;
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

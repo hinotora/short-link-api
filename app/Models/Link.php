@@ -53,7 +53,7 @@ class Link extends BaseModel
 
         $data = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $data['short'] = appUrl($data['short']);
+        $data['short'] = appUrl('/'.$data['short']);
 
         return $data;
     }

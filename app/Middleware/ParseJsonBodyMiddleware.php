@@ -19,7 +19,7 @@ class ParseJsonBodyMiddleware implements MiddlewareInterface
             if (json_last_error() === JSON_ERROR_NONE) {
                 $request = $request->withParsedBody($contents);
             } else {
-                throw new HttpBadRequestException($request, 'JSON PARSE FAIL');
+                throw new HttpBadRequestException($request, 'Given json is not valid (Parse error).');
             }
         }
 

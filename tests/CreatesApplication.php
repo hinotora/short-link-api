@@ -2,9 +2,11 @@
 
 namespace Tests;
 
+use Slim\App;
+
 trait CreatesApplication
 {
-    protected $app;
+    protected ?App $app;
 
     protected function setUp(): void
     {
