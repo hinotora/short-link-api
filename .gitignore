@@ -1,4 +1,11 @@
+# Source files
 vendor/
+
+# Debug stuff
 .idea
 .phpunit.result.cache
+
+# Envs
 .env
+.env.example
+

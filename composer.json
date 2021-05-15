@@ -27,7 +27,11 @@
         "db-migrate": "vendor/bin/phinx migrate",
         "db-seed": "vendor/bin/phinx seed:run",
         "db-refresh": "vendor/bin/phinx rollback -t 0; vendor/bin/phinx migrate; vendor/bin/phinx seed:run",
+        "test": "vendor/bin/phpunit",
 
-        "test": "vendor/bin/phpunit"
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('.env') || copy('.env.testing', '.env');\""
+        ]
     }
 }
