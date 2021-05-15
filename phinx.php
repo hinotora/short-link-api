@@ -3,8 +3,10 @@
 require_once 'vendor/autoload.php';
 
 // Load environment vars
-$env = Dotenv\Dotenv::createMutable('.');
-$env->load();
+if (!isset($_ENV['HEROKU'])) {
+    $env = Dotenv\Dotenv::createMutable('.');
+    $env->load();
+}
 
 $db_settings = require_once 'config/database.php';
 
