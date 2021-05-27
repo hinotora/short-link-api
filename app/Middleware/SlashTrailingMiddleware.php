@@ -7,8 +7,15 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class SlashTrainingMiddleware
+class SlashTrailingMiddleware
 {
+    /**
+     * Removes slash from env of the url because for slim some/url and some/url/ these are different urls.
+     *
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
     public function __invoke(Request $request, RequestHandler $handler): ResponseInterface
     {
         $uri = $request->getUri();

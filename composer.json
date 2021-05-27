@@ -2,7 +2,7 @@
     "name": "hinotora/short-link-api",
     "description": "REST API for making short links",
     "require": {
-        "php": "^7.4.0",
+        "php": "^7.4.0 | ^8.0",
         "ext-pdo": "*",
         "ext-pdo_pgsql": "*",
         "slim/slim": "^4.7",

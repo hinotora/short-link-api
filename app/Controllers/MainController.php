@@ -9,13 +9,33 @@ use Slim\Exception\HttpNotFoundException;
 
 class MainController
 {
+    /**
+     * Contains Link model.
+     *
+     * @var Link
+     */
     private Link $link;
 
+    /**
+     * LinkController constructor.
+     * Link model injects via PHP-DI.
+     *
+     * @param Link $link
+     */
     public function __construct(Link $link)
     {
         $this->link = $link;
     }
 
+    /**
+     * Main redirect endpoint. Searches short link in database and redirects user.
+     *
+     * @param Response $response
+     * @param Request $request
+     * @param string $link
+     * @return Response
+     * @throws HttpNotFoundException
+     */
     public function redirect(Response $response, Request $request, string $link): Response
     {
         if (!$this->link->find($link)) {

@@ -7,9 +7,21 @@ use Slim\App;
 
 class Link extends BaseModel
 {
+    /**
+     * Table name and PK fields name.
+     *
+     * @var string
+     */
     protected string $table = 'links';
     protected string $primaryKey = 'link_id';
 
+    /**
+     * Finds link with short url in database and sets up model id.
+     * Returns true if find, and false if not.
+     *
+     * @param string $slug
+     * @return bool
+     */
     public function find(string $slug): bool
     {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->getTableName()} WHERE short = :slug");
@@ -26,6 +38,11 @@ class Link extends BaseModel
         }
     }
 
+    /**
+     * Returns full link with short url.
+     *
+     * @return string
+     */
     public function getUrl(): string
     {
         $stmt = $this->pdo->query(
@@ -35,7 +52,12 @@ class Link extends BaseModel
         return $stmt->fetch(\PDO::FETCH_ASSOC)['full_link'];
     }
 
-    public function incrementRedirect(): static
+    /**
+     * Increments redirect_count field in database then user is being redirected.
+     *
+     * @return $this
+     */
+    public function incrementRedirect(): Link
     {
         $this->pdo->query(" UPDATE {$this->getTableName()}  SET redirects_count = redirects_count + 1 
                                     WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}
@@ -44,7 +66,12 @@ class Link extends BaseModel
         return $this;
     }
 
-    public function info() {
+    /**
+     * Returns full information about short link with redirect counts.
+     *
+     * @return mixed
+     */
+    public function info(): array {
         $stmt = $this->pdo->query(
             "SELECT short, full_link, created_at, redirects_count  FROM {$this->getTableName()} 
                         WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}"
@@ -57,6 +84,13 @@ class Link extends BaseModel
         return $data;
     }
 
+    /**
+     * Stores new link in database. Returns true if success and false if not.
+     *
+     * @param string $newLink
+     * @return bool
+     * @throws \Exception
+     */
     public function store(string $newLink): bool
     {
         $db_driver = environ('DB_DRIVER');
@@ -90,7 +124,12 @@ class Link extends BaseModel
         }
     }
 
-    public function delete()
+    /**
+     * Removes link from database with model identifier.
+     *
+     * @return bool
+     */
+    public function delete(): bool
     {
         try {
             $this->pdo->query("DELETE FROM {$this->getTableName()} WHERE {$this->getPrimaryKeyColumn()} = {$this->getModelId()}");

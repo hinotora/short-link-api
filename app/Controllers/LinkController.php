@@ -11,13 +11,33 @@ use Slim\Exception\HttpNotFoundException;
 
 class LinkController
 {
+    /**
+     * Contains Link model.
+     *
+     * @var Link
+     */
     private Link $link;
 
+    /**
+     * LinkController constructor.
+     * Link model injects via PHP-DI.
+     *
+     * @param Link $link
+     */
     public function __construct(Link $link)
     {
         $this->link = $link;
     }
 
+    /**
+     * Shows information about one link with short url received in uri.
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param string $link
+     * @return ResponseInterface
+     * @throws HttpNotFoundException
+     */
     public function show(ServerRequestInterface $request, ResponseInterface $response, string $link): ResponseInterface
     {
         if (!$this->link->find($link)) {
@@ -31,6 +51,15 @@ class LinkController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Creates new link with full link received in HTTP body.
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws HttpBadRequestException
+     * @throws HttpInternalServerErrorException
+     */
     public function create(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $body =  $request->getParsedBody();
@@ -57,6 +86,16 @@ class LinkController
 
     }
 
+    /**
+     * Removes link from database with short url received in uri.
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param string $link
+     * @return ResponseInterface
+     * @throws HttpInternalServerErrorException
+     * @throws HttpNotFoundException
+     */
     public function delete(ServerRequestInterface $request, ResponseInterface $response, string $link): ResponseInterface
     {
         if (!$this->link->find($link)) {

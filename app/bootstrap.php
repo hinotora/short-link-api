@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Middleware\SlashTrainingMiddleware;
+use App\Middleware\SlashTrailingMiddleware;
 use DI\Bridge\Slim\Bridge as AppFactory;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
@@ -15,8 +15,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 if (isset($_ENV['APP_ENV']) && $_ENV['APP_ENV'] == 'testing') {
     $env = Dotenv::createMutable(dirname(__DIR__),'.env.testing');
     $env->load();
-}
-else if (!isset($_ENV['HEROKU'])) {
+} else if (!isset($_ENV['HEROKU'])) {
     $env = Dotenv::createMutable(dirname(__DIR__));
     $env->load();
 }
@@ -38,6 +37,6 @@ $routes = require __DIR__ . '/../routes/routes.php';
 $routes($app);
 
 // Initialize other middleware
-$app->add(new SlashTrainingMiddleware());
+$app->add(new SlashTrailingMiddleware());
 
 return $app;

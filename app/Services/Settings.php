@@ -14,7 +14,7 @@ class Settings
         $settingsFile = dirname(__DIR__) . '/../config/settings.php';
 
         if (file_exists($settingsFile)) {
-            $this->settings = require_once $settingsFile;
+            $this->settings = require $settingsFile;
         } else {
             throw new \Exception("Application settings file not found in <$settingsFile>");
         }

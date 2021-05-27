@@ -6,9 +6,26 @@ namespace App\Services;
 
 class Database
 {
+    /**
+     * Class instance.
+     *
+     * @var self
+     */
     private static $instance;
+
+    /**
+     * PDO connection object.
+     *
+     * @var \PDO
+     */
     private \PDO $connection;
 
+    /**
+     * Database constructor.
+     * Creates database object.
+     *
+     * @throws \Exception
+     */
     private function __construct()
     {
         $settingsFile = dirname(__DIR__) . '/../config/database.php';
@@ -46,6 +63,11 @@ class Database
         }
     }
 
+    /**
+     * Singleton database object. Returns PDO object.
+     *
+     * @return \PDO
+     */
     public static function getConnection(): \PDO
     {
         if (is_null(self::$instance)) {

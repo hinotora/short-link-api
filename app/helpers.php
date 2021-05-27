@@ -23,8 +23,7 @@ if (!function_exists('parseUrl')) {
      */
     function parseUrl(string $url): bool
     {
-        // TODO: link validator
-        return true;
+        return filter_var($url, FILTER_VALIDATE_URL);
     }
 }
 

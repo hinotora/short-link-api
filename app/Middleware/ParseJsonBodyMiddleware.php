@@ -10,6 +10,14 @@ use Slim\Exception\HttpBadRequestException;
 
 class ParseJsonBodyMiddleware implements MiddlewareInterface
 {
+    /**
+     * Parsing middleware which validate json body if header Content-Type is exist.
+     *
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
+     * @throws HttpBadRequestException
+     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $acceptType = $request->getHeaderLine('Content-Type');
